@@ -5,10 +5,11 @@ rm -f .vimrc
 ln -s am-config/vim .vim
 ln -s .vim/vimrc .vimrc
 
-if [[ -f .zshrc ]]; then
+if [[ -e .zshrc ]]; then
     if ! [[ -h .zshrc ]]; then
         cp .zshrc .zshrc_local
     fi
 fi
 
+rm -f .zshrc
 ln -s am-config/zsh/zshrc .zshrc
