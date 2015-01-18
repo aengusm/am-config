@@ -14,4 +14,3 @@ fi
 
 rm -f .zshrc
 ln -s am-config/zsh/zshrc .zshrc
-source .zshrc
