@@ -1,4 +1,5 @@
 cd
+rm -rf am-config
 git clone https://github.com/aengusm/am-config.git
 rm -rf .vim
 rm -f .vimrc
