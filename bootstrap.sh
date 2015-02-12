@@ -14,3 +14,6 @@ fi
 
 rm -f .zshrc
 ln -s am-config/zsh/zshrc .zshrc
+
+rm -rf .tmux.conf
+ln -s am-config/tmux/tmux.conf .tmux.conf
