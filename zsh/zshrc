@@ -5,9 +5,6 @@ setopt COMPLETE_IN_WORD
 setopt NOBGNICE
 
 # history
-setopt APPEND_HISTORY
-
-# for sharing history between zsh processes
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 
