@@ -74,6 +74,9 @@ endfunction
 map <leader>m1 :call M1()<CR>
 map <leader>m2 :call M2()<CR>
 
+" Map double-, to escape
+imap ,, <Esc>
+
 
 
 
