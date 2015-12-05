@@ -38,6 +38,11 @@ set relativenumber        " Relative line numbering
 syntax enable
 syntax on
 
+" Delete trailing spaces
+autocmd FileType c,cpp,java,php,python,html,css,xml,javascript,perl,ruby autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd BufWritePre *.ion :%s/\s\+$//e                                           
+autocmd BufWritePre *.json :%s/\s\+$//e 
+
 " Turn off auto-splitting of long lines
 set formatoptions-=tc
 
