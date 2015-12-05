@@ -1,3 +1,6 @@
+" Pathogen
+execute pathogen#infect()
+
 " Standard vim options
 set autoindent            " always set autoindenting on
 set backspace=2           " allow backspacing over everything in insert mode
