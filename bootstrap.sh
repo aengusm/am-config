@@ -17,3 +17,10 @@ ln -s am-config/zsh/zshrc .zshrc
 
 rm -rf .tmux.conf
 ln -s am-config/tmux/tmux.conf .tmux.conf
+
+unamestr=`uname`
+if [[ "$unamestr" == 'Darwin' ]]; then
+    echo 'Installing OS X stuff...'
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew install tmux
+fi
