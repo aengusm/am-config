@@ -14,6 +14,9 @@ setopt NO_BEEP
 # automatically decide when to page a list of completions
 LISTMAX=0
 
+# git tab completion
+autoload -Uz compinit && compinit
+
 # disable mail checking
 MAILCHECK=0
 
