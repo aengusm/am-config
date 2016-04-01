@@ -34,7 +34,7 @@ PS1=$'%F{cyan}%m%F{red} :: %F{cyan}%3(C#../#)%2d %F{red}$ %F{white}'
 RPROMPT=''
 
 # Source local zshrc
-if [[ -e .zshrc_local ]]; then
-    source .zshrc_local
+if [[ -e ~/.zshrc_local ]]; then
+    source ~/.zshrc_local
 fi
 
