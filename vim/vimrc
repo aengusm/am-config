@@ -1,3 +1,33 @@
+" Vundle
+set nocompatible              " required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tmhedberg/SimpylFold'            " Code folding
+Plugin 'vim-scripts/indentpython.vim'    " Indenting for Python
+Plugin 'Valloric/YouCompleteMe'          " Autocomplete (see README for install)
+Plugin 'scrooloose/syntastic'            " Syntax checking on save
+Plugin 'nvie/vim-flake8'                 " PEP8 checking
+Plugin 'scrooloose/nerdtree'             " File tree
+Plugin 'jistr/vim-nerdtree-tabs'         " Tabs for nerd tree
+Plugin 'kien/ctrlp.vim'                  " Ctrl-P to search for anything
+Plugin 'tpope/vim-fugitive'              " Git in VIM
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
+" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 " Pathogen
 execute pathogen#infect()
 
@@ -5,10 +35,13 @@ execute pathogen#infect()
 set autoindent            " always set autoindenting on
 set backspace=2           " allow backspacing over everything in insert mode
 set cindent               " c code indenting
+set colorcolumn=80
 set diffopt=filler,iwhite " keep files synced and ignore whitespace
+set encoding=utf-8        " UTF8 encoding
 set expandtab             " Get rid of tabs altogether and replace with spaces
-set foldlevel=0           " show contents of all folds
+set foldlevel=99          " show contents of all folds
 set foldmethod=indent     " use indent unless overridden
+set formatoptions-=tc     " Turn off auto-splitting of long lines
 set guioptions-=m         " Remove menu from the gui
 set guioptions-=T         " Remove toolbar
 set hidden                " hide buffers instead of closing
@@ -22,39 +55,88 @@ set nobackup              " Don't keep a backup file
 set nocompatible          " Use Vim defaults (much better!)
 set nofen                 " disable folds
 set notimeout             " i like to be pokey
+set nu
+set tabstop=4
 set ttimeout              " timeout on key-codes
 set ttimeoutlen=100       " timeout on key-codes after 100ms
+set t_Co=256
 set ruler                 " the ruler on the bottom is useful
 set scrolloff=1           " dont let the curser get too close to the edge
 set shiftwidth=4          " Set indention level to be the same as softtabstop
 set showcmd               " Show (partial) command in status line.
 set showmatch             " Show matching brackets.
-
+set splitbelow
+set splitright
 set textwidth=0           " Don't wrap words by default
-set textwidth=80          " This wraps a line with a break when you reach 80 chars
+set textwidth=79          " This wraps a line with a break when you reach 80 chars
 set virtualedit=block     " let blocks be in virutal edit mode
 set wildmenu              " This is used with wildmode(full) to cycle options
 set relativenumber        " Relative line numbering
-syntax enable
-syntax on
+
+" Python PEP8 Indentation
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix |
+
+" Flag unnecessary whitespace for Python
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " Delete trailing spaces
-autocmd FileType c,cpp,java,php,python,html,css,xml,javascript,perl,ruby autocmd BufWritePre <buffer> :%s/\s\+$//e
-autocmd BufWritePre *.ion :%s/\s\+$//e                                           
-autocmd BufWritePre *.json :%s/\s\+$//e 
+au FileType c,cpp,java,php,python,html,css,xml,javascript,perl,ruby au BufWritePre <buffer> :%s/\s\+$//e
+au BufWritePre *.ion :%s/\s\+$//e
+au BufWritePre *.json :%s/\s\+$//e
 
-" Turn off auto-splitting of long lines
-set formatoptions-=tc
+" Python virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
 
-set nu
-set tabstop=4
-set shiftwidth=4
-set relativenumber
-set colorcolumn=80
-set t_Co=256
-set colorcolumn=81
+" Color stuff
 highlight ColorColumn ctermbg=236
 highlight StatusLine ctermbg=2 ctermfg=236
+
+""" Plugin settings
+
+" Simply Fold
+let g:SimpylFold_docstring_preview=1  " See doc strings for folded code
+
+" YouCompleteMe settings
+let g:ycm_autoclose_preview_window_after_completion=1           " close preview window
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>  " space-g to go to def
+
+" Nerdtree
+let NERDTreeIgnore=['\.pyc$', '\~$']  " ignore files in NERDTree
+
+" Close VIM if NerdTree is the only window left open
+au bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Start Nerdtree if no file is spec'd on open:
+au StdinReadPre * let s:std_in=1
+au VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Key Mappings
+nnoremap <C-J> <C-W><C-J>      " Switch to different split using C-direction
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <space> za            " Enable folding with the spacebar
+map <C-n> :NERDTreeToggle<CR>  " toggle nerdtree
+
+" Syntax highlighting
+let python_highlight_all=1
+syntax enable
+syntax on
 
 """ Functions
 
@@ -84,7 +166,4 @@ map <leader>m2 :call M2()<CR>
 
 " Map double-, to escape
 imap ,, <Esc>
-
-
-
 
