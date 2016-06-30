@@ -33,6 +33,11 @@ PS1=$'%F{cyan}%m%F{red} :: %F{cyan}%3(C#../#)%2d %F{red}$ %F{white}'
 # No right-prompt
 RPROMPT=''
 
+# Ctrl-rightarrow and Ctrl-leftarrow to go forward/backward on command line
+bindkey -e
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+
 # Source local zshrc
 if [[ -e ~/.zshrc_local ]]; then
     source ~/.zshrc_local
