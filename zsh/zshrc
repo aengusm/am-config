@@ -38,6 +38,13 @@ bindkey -e
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
 
+# Mac fix to get some Python-related VIM plugins to use brew-installed Python
+# See: https://github.com/Valloric/YouCompleteMe/issues/620
+unamestr=`uname`
+if [[ "$unamestr" == 'Darwin' ]]; then
+    export DYLD_FORCE_FLAT_NAMESPACE=1
+fi
+
 # Source local zshrc
 if [[ -e ~/.zshrc_local ]]; then
     source ~/.zshrc_local
