@@ -18,7 +18,9 @@ ln -s am-config/zsh/zshrc .zshrc
 rm -rf .tmux.conf
 ln -s am-config/tmux/tmux.conf .tmux.conf
 
+# Install VIM Plugins
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
 
 unamestr=`uname`
 if [[ "$unamestr" == 'Darwin' ]]; then
