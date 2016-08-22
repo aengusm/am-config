@@ -28,3 +28,8 @@ if [[ "$unamestr" == 'Darwin' ]]; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install tmux
 fi
+
+# Configure git
+rm -rf .gitignore_global
+ln -s am-config/git/gitignore_global .gitignore_global
+git config --global core.excludesfile ~/.gitignore_global
