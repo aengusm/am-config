@@ -27,6 +27,7 @@ if [[ "$unamestr" == 'Darwin' ]]; then
     echo 'Installing OS X stuff...'
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install tmux
+    brew install fish
 fi
 
 # Configure git
