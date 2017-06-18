@@ -28,6 +28,8 @@ if [[ "$unamestr" == 'Darwin' ]]; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install tmux
     brew install fish
+    sudo sh -c 'echo "/usr/local/bin/fish" >> /etc/shells'
+    chsh -s /usr/local/bin/fish
 fi
 
 # Configure git
