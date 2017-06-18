@@ -24,11 +24,16 @@ vim +PluginInstall +qall
 
 unamestr=`uname`
 if [[ "$unamestr" == 'Darwin' ]]; then
-    echo 'Installing OS X stuff...'
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    echo 'Installing OS X stuff... (password may be required)'
+    if ! [[ -e /usr/local/bin/brew ]]; then
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
     brew install tmux
     brew install fish
-    sudo sh -c 'echo "/usr/local/bin/fish" >> /etc/shells'
+    if ! grep --quiet fish /etc/shells
+    then
+        sudo sh -c 'echo "/usr/local/bin/fish" >> /etc/shells'
+    fi
     chsh -s /usr/local/bin/fish
 fi
 
